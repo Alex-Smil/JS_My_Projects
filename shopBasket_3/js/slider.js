@@ -33,18 +33,26 @@ function init() {
 }
 
 function addToBasket(eventObj) {
+    // // Определяем родителя кнопки которая вызвала событие
+    // // для дальнейшего чтения данных из этого блока родителя  (.b-catalog__prodUnit)
+    // var eventParent = eventObj.target.parentNode;
+    // // данные извлекаем в свой объект, для дальнейшей его отправки в корзину
+    // var objForBasket = createObjForBasket(eventParent);
+    // // добавляем объект в корзину, для этого
+    // // находим елемент  в DOM документа
+    var objForBasket = createObjForBasket(eventObj);
+    new newTrForBasket = createNewTrForBasket(objForBasket);
+
+}
+
+function createObjForBasket(eventObj) {
     // Определяем родителя кнопки которая вызвала событие
     // для дальнейшего чтения данных из этого блока родителя  (.b-catalog__prodUnit)
     var eventParent = eventObj.target.parentNode;
     // данные извлекаем в свой объект, для дальнейшей его отправки в корзину
-    var objForBasket = createObjForBasket(eventParent);
+
     // добавляем объект в корзину, для этого
     // находим елемент  в DOM документа
-
-
-}
-
-function createObjForBasket(eventParent) {
 
     // берем src картинки, из блока в котором возникло событие
     var imageFullSrc = eventParent.querySelector(".b-catalog__smallImage").src;
@@ -83,6 +91,26 @@ function createObjForBasket(eventParent) {
     // Возвращаем подготовленный объект
     return objForBasket;
 }
+
+
+
+// createNewContentTr(objForBasket);
+function createNewTrForBasket(objForBasket) {
+    var tr = document.createElement("tr");
+    for(var prop in objForBasket) {
+        var td = document.createElement("td");
+        if(prop === "imageString") {
+
+        }
+        td.innerText = objForBasket.prop;
+    }
+}
+
+
+
+
+
+
 
 // ============================ Обработчик слайдера ====================================
 // function turnImage(eventObj)

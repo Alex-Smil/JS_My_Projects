@@ -1,14 +1,35 @@
 @import "../packages/bootstrap-4.1.2/scss/bootstrap.scss";
 
+body {
+  background: #DCDCDC;
+  padding-top: 20px;
+}
+
 .b-basket {
   &__table {
+    position: fixed;
     max-width: 257px;
     background: yellowgreen;
+    border: 1px solid black;
     border-collapse: separate;
     border-spacing: 1px;
 
 
+
+    .firstCell {
+      max-width: 58px;
+    }
   }
+
+  & caption {
+    caption-side: top;
+    text-align: center;
+    border: 1px solid black;
+    border-bottom: none;
+    background: yellowgreen;
+    color: black;
+  }
+
   &__prodImage img{
     width: 50px;
     height: 50px;
@@ -23,6 +44,8 @@
 
 .b-catalog {
   background: #FFF8DC;
+  padding-top: 20px;
+  padding-bottom: 20px;
 
   &__bigImage {
     display: block;

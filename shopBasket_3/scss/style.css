@@ -6776,11 +6776,26 @@ a.text-dark:hover, a.text-dark:focus {
   .table .thead-dark th {
     color: inherit;
     border-color: #dee2e6; } }
+body {
+  background: #DCDCDC;
+  padding-top: 20px; }
+
 .b-basket__table {
+  position: fixed;
   max-width: 257px;
   background: yellowgreen;
+  border: 1px solid black;
   border-collapse: separate;
   border-spacing: 1px; }
+  .b-basket__table .firstCell {
+    max-width: 58px; }
+.b-basket caption {
+  caption-side: top;
+  text-align: center;
+  border: 1px solid black;
+  border-bottom: none;
+  background: yellowgreen;
+  color: black; }
 .b-basket__prodImage img {
   width: 50px;
   height: 50px; }
@@ -6790,7 +6805,9 @@ a.text-dark:hover, a.text-dark:focus {
   padding: 3px; }
 
 .b-catalog {
-  background: #FFF8DC; }
+  background: #FFF8DC;
+  padding-top: 20px;
+  padding-bottom: 20px; }
   .b-catalog__bigImage {
     display: block; }
     .b-catalog__bigImage_marginleftRight {
