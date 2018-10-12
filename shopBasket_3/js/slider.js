@@ -85,7 +85,7 @@ function createObjForBasket(eventObj) {
 
     // собираем объект при помощи конструктора ObjForBasket, для текущего объекта передачи в корзину
     var objForBasket = new ObjForBasket(imageAdaptSrc, prodTitle, prodCost);
-    console.dir(objForBasket);
+    console.log(objForBasket);
     console.log("=============================");
 
     // констркутор объектов для корзины
@@ -104,17 +104,22 @@ function createObjForBasket(eventObj) {
 // createNewContentTr(objForBasket);
 function createNewTrForBasket(objForBasket) {
     var tr = document.createElement("tr");
+    // for(var i = 0; ) {
+    //
+    // }
     for(var prop in objForBasket) {
         var td = document.createElement("td");
-        if(prop === "imageString") {
+        if(prop === "imageSrc") {
             var img = document.createElement("img");
-            console.log("objForBasket.prop: " + objForBasket.prop);
-            img.src = objForBasket.prop;
+
+            console.log("objForBasket.prop: " + objForBasket[prop]);
+            img.src = objForBasket[prop];
+            td.className = "b-basket__prodImage";
             td.appendChild(img);
             console.log(td);
         } else {
-            console.log("objForBasket.prop: " + objForBasket.prop);
-            td.innerText = objForBasket.prop;
+            console.log("objForBasket.prop: " + objForBasket[prop]);
+            td.innerText = objForBasket[prop];
             console.log(td);
         }
         tr.appendChild(td);
