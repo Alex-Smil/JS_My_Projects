@@ -1,0 +1,81 @@
+@import "../packages/bootstrap-4.1.2/scss/bootstrap.scss";
+
+.b-basket {
+  &__table {
+    max-width: 257px;
+    background: yellowgreen;
+    border-collapse: separate;
+    border-spacing: 1px;
+
+
+  }
+  &__prodImage img{
+    width: 50px;
+    height: 50px;
+  }
+
+  & td {
+    border: 1px solid black;
+    text-align: center;
+    padding: 3px;
+  }
+}
+
+.b-catalog {
+  background: #FFF8DC;
+
+  &__bigImage {
+    display: block;
+
+    &_marginleftRight {
+      margin: 0 auto;
+    }
+  }
+
+  &__buttonsWrap {
+    text-align: center;
+
+    &_marginTop {
+      margin-top: 10px;
+    }
+  }
+
+  &__prevButton,
+  &__nextButton {
+    display: inline-block;
+    width: 90px;
+  }
+
+  &__productUnits{
+    background: #D2691E;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    padding: 15px;
+
+    &_marginTop {
+      margin-top: 10px;
+    }
+  }
+
+  &__prodUnit {
+    background: white;
+    padding: 5px;
+  }
+
+  &__smallImage {
+    width: 100%;
+  }
+
+  &__prodTitle,
+  &__prodCost {
+    text-align: center;
+  }
+
+  &__buttonBuy{
+    width: 100%;
+  }
+}
+
+
+
