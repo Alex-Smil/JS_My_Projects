@@ -40,8 +40,15 @@ function addToBasket(eventObj) {
     // var objForBasket = createObjForBasket(eventParent);
     // // добавляем объект в корзину, для этого
     // // находим елемент  в DOM документа
+
+    var basketTBody = document.querySelector(".b-basket__tbody");
     var objForBasket = createObjForBasket(eventObj);
-    new newTrForBasket = createNewTrForBasket(objForBasket);
+    var newTrForBasket = createNewTrForBasket(objForBasket);
+    console.log("#################################");
+    console.dir("newTrForBasket: " + newTrForBasket);
+    console.log("#################################");
+    basketTBody.appendChild(newTrForBasket);
+
 
 }
 
@@ -100,10 +107,19 @@ function createNewTrForBasket(objForBasket) {
     for(var prop in objForBasket) {
         var td = document.createElement("td");
         if(prop === "imageString") {
-
+            var img = document.createElement("img");
+            console.log("objForBasket.prop: " + objForBasket.prop);
+            img.src = objForBasket.prop;
+            td.appendChild(img);
+            console.log(td);
+        } else {
+            console.log("objForBasket.prop: " + objForBasket.prop);
+            td.innerText = objForBasket.prop;
+            console.log(td);
         }
-        td.innerText = objForBasket.prop;
+        tr.appendChild(td);
     }
+    return tr;
 }
 
 
