@@ -51,9 +51,6 @@ function addToBasket(eventObj) {
     var basketTBody = document.querySelector(".b-basket__tbody");
     var objForBasket = createObjForBasket(eventObj);
     var newTrForBasket = createNewTrForBasket(objForBasket);
-    console.log("#################################");
-    console.dir("newTrForBasket: " + newTrForBasket);
-    console.log("#################################");
     basketTBody.appendChild(newTrForBasket);
 
 
@@ -134,6 +131,7 @@ function createNewTrForBasket(objForBasket) {
     quantityTd.innerText = "1";
     tr.appendChild(quantityTd);
 
+    // Создаем строку с общей строимостью по текущей позиции
     var totalCost = document.createElement("td");
     totalCost.innerText = objForBasket.prodCost;
     tr.appendChild(totalCost);
