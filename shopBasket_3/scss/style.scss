@@ -8,7 +8,7 @@ body {
 .b-basket {
   &__table {
     position: fixed;
-    max-width: 257px;
+    width: 257px;
     background: yellowgreen;
     border: 1px solid black;
     border-collapse: separate;
@@ -17,7 +17,7 @@ body {
 
 
     .firstCell {
-      max-width: 58px;
+      min-width: 58px;
     }
   }
 

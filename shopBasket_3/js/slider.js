@@ -1,9 +1,9 @@
 
-// список для маленьких картинок делаем глобальным, для того чтобы его могли видеть 2 функции
-// так как каждый раз инициализировать массив при каждом вызове кнопки, ресурсо затратно, на мой взгляд
-var listOfSmallImages;
-// индексы элементов из списка listOfSmallImages, индекс тоже глобальный
-var index = 0;
+// // список для маленьких картинок делаем глобальным, для того чтобы его могли видеть 2 функции
+// // так как каждый раз инициализировать массив при каждом вызове кнопки, ресурсо затратно, на мой взгляд
+// var listOfSmallImages;
+// // индексы элементов из списка listOfSmallImages, индекс тоже глобальный
+// var index = 0;
 
 // function init() сработает только после полной загрузки страницы
 window.onload = init;
@@ -12,6 +12,13 @@ window.onload = init;
 // после полной загрузки страницы (т.е. сначала будет полностью построена DOM model)
 function init() {
     // =================== Блок инициализации обработчиков слайдера =================
+    // список для маленьких картинок делаем глобальным, для того чтобы его могли видеть 2 функции
+    // так как каждый раз инициализировать массив при каждом вызове кнопки, ресурсо затратно, на мой взгляд
+    var listOfSmallImages;
+    // индексы элементов из списка listOfSmallImages, индекс тоже глобальный
+    var index = 0;
+
+
     // получаем массив из маленьких картинок
     listOfSmallImages = document.getElementsByClassName("b-catalog__smallImage");
     // получеам кнопки для работы с ними
@@ -104,14 +111,12 @@ function createObjForBasket(eventObj) {
 // createNewContentTr(objForBasket);
 function createNewTrForBasket(objForBasket) {
     var tr = document.createElement("tr");
-    // for(var i = 0; ) {
-    //
-    // }
+    tr.id = objForBasket.prodTitle;
+    console.log("tr.className = " + tr.className);
     for(var prop in objForBasket) {
         var td = document.createElement("td");
         if(prop === "imageSrc") {
             var img = document.createElement("img");
-
             console.log("objForBasket.prop: " + objForBasket[prop]);
             img.src = objForBasket[prop];
             td.className = "b-basket__prodImage";
@@ -124,6 +129,14 @@ function createNewTrForBasket(objForBasket) {
         }
         tr.appendChild(td);
     }
+    // Создание строки кол-во единиц текущего товара
+    var quantityTd = document.createElement("td");
+    quantityTd.innerText = "1";
+    tr.appendChild(quantityTd);
+
+    var totalCost = document.createElement("td");
+    totalCost.innerText = objForBasket.prodCost;
+    tr.appendChild(totalCost);
     return tr;
 }
 
