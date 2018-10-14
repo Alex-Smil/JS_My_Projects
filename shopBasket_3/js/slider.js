@@ -96,7 +96,7 @@ function duplicateExistingProduct(objForBasket) {
     var quantityTd = existingTr.lastChild.previousSibling.innerText;
     var totalCost = parseInt(existingTr.lastChild.innerText);
     existingTr.lastChild.previousSibling.innerText = ++quantityTd;
-    existingTr.lastChild.innerText = totalCost + totalCost;
+    existingTr.lastChild.innerText = totalCost + parseInt(objForBasket.prodCost);
 }
 
 function createObjForBasket(eventObj) {
