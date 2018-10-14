@@ -50,10 +50,24 @@ function addToBasket(eventObj) {
 
     var basketTBody = document.querySelector(".b-basket__tbody");
     var objForBasket = createObjForBasket(eventObj);
-    var newTrForBasket = createNewTrForBasket(objForBasket);
-    basketTBody.appendChild(newTrForBasket);
+    if (matchCheck(objForBasket, basketTBody)) {
+        // увелич кол-во вместе с итогом по товару + увелич общий итог по корзине
+    } else {
+        var newTrForBasket = createNewTrForBasket(objForBasket);
+        basketTBody.appendChild(newTrForBasket);
+    }
 
+    for(var i = 0; i < basketTBody.childNodes.length; i++) {
+        console.log("basketTBody.childNodes[i] = " + basketTBody.childNodes[i]);
+    }
 
+}
+
+function matchCheck(objForBasket, basketTBody) {
+    if (document.getElementById(objForBasket.prodTitle)) {
+        console.log("СОВПАДЕНИЕ !!!!")
+    }
+    return false;//заглушка
 }
 
 function createObjForBasket(eventObj) {
