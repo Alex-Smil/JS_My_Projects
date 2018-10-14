@@ -1,9 +1,9 @@
 
-// // список для маленьких картинок делаем глобальным, для того чтобы его могли видеть 2 функции
-// // так как каждый раз инициализировать массив при каждом вызове кнопки, ресурсо затратно, на мой взгляд
-// var listOfSmallImages;
-// // индексы элементов из списка listOfSmallImages, индекс тоже глобальный
-// var index = 0;
+// список для маленьких картинок делаем глобальным, для того чтобы его могли видеть 2 функции
+// так как каждый раз инициализировать массив при каждом вызове кнопки, ресурсо затратно, на мой взгляд
+var listOfSmallImages;
+// индексы элементов из списка listOfSmallImages, индекс тоже глобальный
+var index = 0;
 
 // function init() сработает только после полной загрузки страницы
 window.onload = init;
@@ -11,12 +11,12 @@ window.onload = init;
 // function init() регистрирует обработчиков, данная функция сработает сразу
 // после полной загрузки страницы (т.е. сначала будет полностью построена DOM model)
 function init() {
-    // =================== Блок инициализации обработчиков слайдера =================
-    // список для маленьких картинок делаем глобальным, для того чтобы его могли видеть 2 функции
-    // так как каждый раз инициализировать массив при каждом вызове кнопки, ресурсо затратно, на мой взгляд
-    var listOfSmallImages;
-    // индексы элементов из списка listOfSmallImages, индекс тоже глобальный
-    var index = 0;
+    // // =================== Блок инициализации обработчиков слайдера =================
+    // // список для маленьких картинок делаем глобальным, для того чтобы его могли видеть 2 функции
+    // // так как каждый раз инициализировать массив при каждом вызове кнопки, ресурсо затратно, на мой взгляд
+    // var listOfSmallImages;
+    // // индексы элементов из списка listOfSmallImages, индекс тоже глобальный
+    // var index = 0;
 
 
     // получаем массив из маленьких картинок
@@ -50,24 +50,53 @@ function addToBasket(eventObj) {
 
     var basketTBody = document.querySelector(".b-basket__tbody");
     var objForBasket = createObjForBasket(eventObj);
-    if (matchCheck(objForBasket, basketTBody)) {
+    if (checkDuplicateInBasket(objForBasket)) {
         // увелич кол-во вместе с итогом по товару + увелич общий итог по корзине
+        // var selector = "." + objForBasket.prodTitle;
+        // var twinTr = basketTBody.querySelector(selector);//null
+        // console.log("twinTr = " + twinTr);
+        // console.log("twinTr.childNodes[3].innerText" + twinTr.childNodes[3].innerText);
+        // // twinTr.childNodes[3].innerText += twinTr.childNodes[3].innerText;
+        // // twinTr.childNodes[4].innerText += twinTr.childNodes[4].innerText;
+
+        // var duplicateString;
+        duplicateExistingProduct(objForBasket);
+
+
     } else {
         var newTrForBasket = createNewTrForBasket(objForBasket);
         basketTBody.appendChild(newTrForBasket);
     }
 
-    for(var i = 0; i < basketTBody.childNodes.length; i++) {
-        console.log("basketTBody.childNodes[i] = " + basketTBody.childNodes[i]);
-    }
+    // for(var i = 0; i < basketTBody.childNodes.length; i++) {
+    //     console.log("basketTBody.childNodes[i] = " + basketTBody.childNodes[i]);
+    // }
 
 }
 
-function matchCheck(objForBasket, basketTBody) {
+function checkDuplicateInBasket(objForBasket) {
+    
     if (document.getElementById(objForBasket.prodTitle)) {
-        console.log("СОВПАДЕНИЕ !!!!")
-    }
-    return false;//заглушка
+        console.log("СОВПАДЕНИЕ !!!!");
+        return true;
+    } 
+    return false;
+}
+
+function duplicateExistingProduct(objForBasket) {
+    var existingTr = document.getElementById(objForBasket.prodTitle);
+    console.log("%%%%%%%%%%%%%%%%%%");
+    console.log("existingTr.lastChild.previousSibling.innerText = " + existingTr.lastChild.previousSibling.innerText);
+    console.log("existingTr.lastChild.innerText = " + existingTr.lastChild.innerText);
+    console.log("%%%%%%%%%%%%%%%%%%");
+    // existingTr.lastChild.previousSibling.innerText += existingTr.lastChild.previousSibling.innerText;
+    // existingTr.lastChild.innerText += existingTr.lastChild.innerText;
+
+
+    var quantityTd = existingTr.lastChild.previousSibling.innerText;
+    var totalCost = parseInt(existingTr.lastChild.innerText);
+    existingTr.lastChild.previousSibling.innerText = ++quantityTd;
+    existingTr.lastChild.innerText = totalCost + totalCost;
 }
 
 function createObjForBasket(eventObj) {
