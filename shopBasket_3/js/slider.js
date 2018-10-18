@@ -1,117 +1,78 @@
 
+
+
+// function init() сработает только после полной загрузки страницы
+window.onload = init;
+
+// ========== Глобальные переменные ==========
 // список для маленьких картинок делаем глобальным, для того чтобы его могли видеть 2 функции
 // так как каждый раз инициализировать массив при каждом вызове кнопки, ресурсо затратно, на мой взгляд
 var listOfSmallImages;
 // индексы элементов из списка listOfSmallImages, индекс тоже глобальный
 var index = 0;
-
-// function init() сработает только после полной загрузки страницы
-window.onload = init;
+// ============================================
 
 // function init() регистрирует обработчиков, данная функция сработает сразу
 // после полной загрузки страницы (т.е. сначала будет полностью построена DOM model)
 function init() {
-    // // =================== Блок инициализации обработчиков слайдера =================
-    // // список для маленьких картинок делаем глобальным, для того чтобы его могли видеть 2 функции
-    // // так как каждый раз инициализировать массив при каждом вызове кнопки, ресурсо затратно, на мой взгляд
-    // var listOfSmallImages;
-    // // индексы элементов из списка listOfSmallImages, индекс тоже глобальный
-    // var index = 0;
-
-
+    // =================== Блок инициализации обработчиков слайдера =================
     // получаем массив из маленьких картинок
     listOfSmallImages = document.getElementsByClassName("b-catalog__smallImage");
     // получеам кнопки для работы с ними
     var prevBtn = document.querySelector(".b-catalog__prevBtn");
     var nextBtn = document.querySelector(".b-catalog__nextBtn");
-    // присваиваем кнопкам обработчика события нажатия, один для двух
+    // присваиваем кнопкам обработчика события нажатия, один обработчик для двух кнопок
     prevBtn.onclick = turnImage;
     nextBtn.onclick =turnImage;
     // ==============================================================================
 
     // =================== Блок инициализации обработчиков корзины =================
+    // инициализируем коллекцию с объектами (кнопки buy в каталоге)
     var listOfBuyButtons = document.getElementsByClassName("b-catalog__buttonBuy");
-    // for(var btn in listOfBuyButtons) {
-    //     btn.onclick = addToBasket;
-    // }
+    
+    // в цикле назначаем каждой кнопке buy обработчика события нажатия - addToBasket.
     for (var i = 0; i < listOfBuyButtons.length; i++) {
         listOfBuyButtons[i].onclick = addToBasket;
     }
 }
 
+// ==================== Блок функций для обработки добавления товаров из каталога в корзину =====================
+// function addToBasket(eventObj) является верхней фнкцией из рядя функций по добавлению объекта/товара в корзину
+// она управляет порядком вызовов остальных функций 
 function addToBasket(eventObj) {
-    // // Определяем родителя кнопки которая вызвала событие
-    // // для дальнейшего чтения данных из этого блока родителя  (.b-catalog__prodUnit)
-    // var eventParent = eventObj.target.parentNode;
-    // // данные извлекаем в свой объект, для дальнейшей его отправки в корзину
-    // var objForBasket = createObjForBasket(eventParent);
-    // // добавляем объект в корзину, для этого
-    // // находим елемент  в DOM документа
-
+    // инициализирием объект корзину для дальнейший манипуляции с ней
     var basketTBody = document.querySelector(".b-basket__tbody");
-    var objForBasket = createObjForBasket(eventObj);
+    // создаем объект по нажатию на кнопку buy, данный объект хранит информацию об объетке/покупке
+    // в дальнейшем информация из этого объекта будет перенесена в поля таблицы/корзины  
+    var objForBasket = createObjForBasket(eventObj);// +++++++++
+
+    // текущий блок проверок необходим для обработки дубликатов в корзине, т.е. если встретится 
+    // уже выбранный товар в корзине мы не будем создавать и добавлять новую строку в таблицу/корзину
+    // а просто увеличим значения в уже существующей строке  
     if (checkDuplicateInBasket(objForBasket)) {
-        // увелич кол-во вместе с итогом по товару + увелич общий итог по корзине
-        // var selector = "." + objForBasket.prodTitle;
-        // var twinTr = basketTBody.querySelector(selector);//null
-        // console.log("twinTr = " + twinTr);
-        // console.log("twinTr.childNodes[3].innerText" + twinTr.childNodes[3].innerText);
-        // // twinTr.childNodes[3].innerText += twinTr.childNodes[3].innerText;
-        // // twinTr.childNodes[4].innerText += twinTr.childNodes[4].innerText;
-
-        // var duplicateString;
         duplicateExistingProduct(objForBasket);
-
-
     } else {
+        // если текущего товара еще нет в корзине
+        // то создаем новую строку с инфой из объекта objForBasket
         var newTrForBasket = createNewTrForBasket(objForBasket);
+        // добавляем строку/товар в таблицу/корзину
         basketTBody.appendChild(newTrForBasket);
     }
-
-    // for(var i = 0; i < basketTBody.childNodes.length; i++) {
-    //     console.log("basketTBody.childNodes[i] = " + basketTBody.childNodes[i]);
-    // }
-
 }
 
-function checkDuplicateInBasket(objForBasket) {
-    
-    if (document.getElementById(objForBasket.prodTitle)) {
-        console.log("СОВПАДЕНИЕ !!!!");
-        return true;
-    } 
-    return false;
-}
-
-function duplicateExistingProduct(objForBasket) {
-    var existingTr = document.getElementById(objForBasket.prodTitle);
-    console.log("%%%%%%%%%%%%%%%%%%");
-    console.log("existingTr.lastChild.previousSibling.innerText = " + existingTr.lastChild.previousSibling.innerText);
-    console.log("existingTr.lastChild.innerText = " + existingTr.lastChild.innerText);
-    console.log("%%%%%%%%%%%%%%%%%%");
-    // existingTr.lastChild.previousSibling.innerText += existingTr.lastChild.previousSibling.innerText;
-    // existingTr.lastChild.innerText += existingTr.lastChild.innerText;
-
-
-    var quantityTd = existingTr.lastChild.previousSibling.innerText;
-    var totalCost = parseInt(existingTr.lastChild.innerText);
-    existingTr.lastChild.previousSibling.innerText = ++quantityTd;
-    existingTr.lastChild.innerText = totalCost + parseInt(objForBasket.prodCost);
-}
-
+// function createObjForBasket(eventObj) - создает объект в ответ на click по кнопке buy
+// объект хранит информацию о выбранной покупке 
 function createObjForBasket(eventObj) {
+    console.log("========  test modes for createObjForBasket() function ========");
     // Определяем родителя кнопки которая вызвала событие
     // для дальнейшего чтения данных из этого блока родителя  (.b-catalog__prodUnit)
     var eventParent = eventObj.target.parentNode;
-    // данные извлекаем в свой объект, для дальнейшей его отправки в корзину
-
-    // добавляем объект в корзину, для этого
-    // находим елемент  в DOM документа
-
-    // берем src картинки, из блока в котором возникло событие
+    
+    // берем src картинки, из блока в котором возникло событие * (см. подробное описание внизу)
     var imageFullSrc = eventParent.querySelector(".b-catalog__smallImage").src;
+    // test mode
     console.log("imageFullSrc = " + imageFullSrc);
-    // адаптирем полный src(url) картинки, просто обрезав его до нужного места
+    // адаптируем полный src(url) картинки, просто обрезав его до нужного места
     imageFullSrc = imageFullSrc.split("shopBasket_3/");
     // Берем образанную часть
     var imageAdaptSrc = imageFullSrc[1];
@@ -119,8 +80,8 @@ function createObjForBasket(eventObj) {
     console.log("imageAdaptSrc = " + imageAdaptSrc);
 
     // формируем имя для объекта который будет хранить инфу о выбранном товаре,
-    // в дальнейшем данный объект будет отправлен в корзину
     var prodTitle = eventParent.querySelector(".b-catalog__prodTitle").innerText;
+    // test mode
     console.log("prodTitle = " + prodTitle);
 
     // определяем цену товара
@@ -133,59 +94,90 @@ function createObjForBasket(eventObj) {
     // собираем объект при помощи конструктора ObjForBasket, для текущего объекта передачи в корзину
     var objForBasket = new ObjForBasket(imageAdaptSrc, prodTitle, prodCost);
     console.log(objForBasket);
-    console.log("=============================");
+    console.log("======== end of test modes for createObjForBasket() function ========\n");
 
-    // констркутор объектов для корзины
+    // констркутор объектов для корзины, названия говорят сами за себя
     function ObjForBasket(imageAdaptSrc, prodTitle, prodCost) {
         this.imageSrc = imageAdaptSrc;
         this.prodTitle =  prodTitle;
         this.prodCost = prodCost;
-        // this.quantityOfGoods =
     }
-    // Возвращаем подготовленный объект
+    // Возвращаем подготовленный объект с инфой о покупке
     return objForBasket;
 }
 
+// function checkDuplicateInBasket(objForBasket) проверяет был ли текущий товар ранее добавлен в корзину, да - нет
+function checkDuplicateInBasket(objForBasket) {
+    if (document.getElementById(objForBasket.prodTitle)) {
+        // test mode
+        console.log("======= test mode for checkDuplicateInBasket() function ========\n" +
+        "СОВПАДЕНИЕ !!!!\n" +
+        "======= end of test mode for checkDuplicateInBasket() function) =========\n");
+        return true;
+    } 
+    return false;
+}
 
+// Данная функция срабоает в случай если выбранный объект уже добавлен в корзину,
+// она считает и отоброжает в корзине кол-во шт и общую стоимость по каждому отдельно взятому товару  
+function duplicateExistingProduct(objForBasket) {
+    // определяем имя вызвашего события товара
+    var existingTr = document.getElementById(objForBasket.prodTitle);
 
-// createNewContentTr(objForBasket);
+    // test mode
+    console.log("=========== test mode for duplicateExistingProduct() function ==================");
+    console.log("existingTr.lastChild.previousSibling.innerText = " + existingTr.lastChild.previousSibling.innerText);
+    console.log("existingTr.lastChild.innerText = " + existingTr.lastChild.innerText);
+    console.log("=========== end of test mode for duplicateExistingProduct() function ==================\n");
+
+    // определяем поле строки товара в котором отображается кол-во шт товара
+    var quantityTd = existingTr.lastChild.previousSibling.innerText;
+    // прибавляем единицу
+    existingTr.lastChild.previousSibling.innerText = ++quantityTd;
+    
+    // определяем поле строки товара в котором отображается общая стоимость по текущей позиции товара
+    var totalCost = parseInt(existingTr.lastChild.innerText);
+    // увеличиваем общую стоимость по текущей позиции товара
+    existingTr.lastChild.innerText = totalCost + parseInt(objForBasket.prodCost);
+}
+
+// createNewContentTr(objForBasket); - создает новую строку с инфой из объекта objForBasket,
+// эта строка потом будет помещена и отображена в корзине
 function createNewTrForBasket(objForBasket) {
+    // создаем новую строку
     var tr = document.createElement("tr");
+    // присваиваем ей id
     tr.id = objForBasket.prodTitle;
-    console.log("tr.className = " + tr.className);
+
+    // проходим по св-вам объекта и переносим значения его св-в в поля строки
     for(var prop in objForBasket) {
+        // создаем новое поле в строке корзины
         var td = document.createElement("td");
+
+        // поле с картинкой в корзине требует доп. обработки
         if(prop === "imageSrc") {
             var img = document.createElement("img");
-            console.log("objForBasket.prop: " + objForBasket[prop]);
             img.src = objForBasket[prop];
             td.className = "b-basket__prodImage";
             td.appendChild(img);
-            console.log(td);
         } else {
-            console.log("objForBasket.prop: " + objForBasket[prop]);
+            // или же просто вставляем инфу из поля св-ва объекта в поле строки в корзине
             td.innerText = objForBasket[prop];
-            console.log(td);
         }
         tr.appendChild(td);
     }
-    // Создание строки кол-во единиц текущего товара
+    // отдельно создаем:
+    // строку с кол-вом единиц текущего товара
     var quantityTd = document.createElement("td");
     quantityTd.innerText = "1";
     tr.appendChild(quantityTd);
-
-    // Создаем строку с общей строимостью по текущей позиции
+    // строку с общей строимостью по текущей позиции
     var totalCost = document.createElement("td");
     totalCost.innerText = objForBasket.prodCost;
     tr.appendChild(totalCost);
     return tr;
 }
-
-
-
-
-
-
+// ==================== Конец блока функций для обработки добавления товаров из каталога в корзину =====================
 
 // ============================ Обработчик слайдера ====================================
 // function turnImage(eventObj)
