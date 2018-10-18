@@ -189,6 +189,8 @@ function turnImage(eventObj) {
     // определяем кнопку вызвавшую событие
     var eventButton = eventObj.target;
 
+    // эти две переменные объявил здесь для расширения области их видимости,
+    // в целях экономии ресурсов RAM
     var smallImageSrc;
     var splitedSmallImageSrc;
 
@@ -223,8 +225,5 @@ function turnImage(eventObj) {
             splitedSmallImageSrc = smallImageSrc.split("shopBasket_3/");
             bigImage.src = splitedSmallImageSrc[1].replace("small/", "");
             break;
-
-        default:
-            // console.log();
     }
 }
