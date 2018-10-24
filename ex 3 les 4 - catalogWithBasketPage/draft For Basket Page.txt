@@ -1,0 +1,37 @@
+<main class="b-main">
+    <div class="b-catalog">
+        <div class="b-catalog__unitsWrap">
+
+        <!-- ****************************************************************************** -->
+            <div class="b-catalog__unit">
+                <img class="b-catalog__image" src="images/catalog/1984 Macintosh 128K.jpg" alt="">
+                <h3 class="b-catalog__unitTitle">Prod 1</h3>
+                <p class="b-catalog__descript">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    iente expedita impedit earum libero, veritatis fugit ipsam,
+                    abore, porro blanditiis laborum architecto cumque consequuntur ut dolor!
+                </p>
+                <div class="b-catalog__price">43000<span> rub</span></div>
+                <div class="b-catalog__buttonsWrap">
+                    <a href="#">в корзину</a>
+                    <a href="#">подробности</a>
+                </div>
+            </div>
+        <!-- ****************************************************************************** -->
+						
+						
+            let prod_1 = {
+                // front-end propirties
+                image: "hereIsUrl",
+                name: "prod_1",
+                cost: 1000,
+                descript: {
+                    proc: "intel i5",
+                    ram: 16,
+                    gpu: "geforce 1070"
+                },
+                
+                // back-end propirties
+                id: 123,
+                category: "homePC"
+            }

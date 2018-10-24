@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <script>
+            // *** Блок инициализации корзины ***
+            let basket = {
+                prodsInBasket: [],
+                count: 0,
+                totalPrice: 0,
+
+                pushProdToBasket: function(prod) {
+                    this.prodsInBasket.push(prod);
+                    this.totalPrice += prod.cost;
+                },
+
+                getTotalPrice: function() {
+                    let tmpTotalPrice = 0;
+                    if(this.isEmptyBasket()) {
+                        console.log("Корзина пуста, общая стоимость равна 0");
+                        return this.totalPrice;
+                    } else {
+                        for(let i = 0; i < this.prodsInBasket.length; i++) {
+                            tmpTotalPrice += this.prodsInBasket[i].cost;
+                        }
+                        return tmpTotalPrice;
+                    }
+                },
+
+                printBasket: function() {
+                    if(this.isEmptyBasket()) {
+                        console.log("Корзина пуста, отображать нечего");
+                        return false;
+                    } else {
+                        console.log("");
+                        console.log("***** отображение объектов/товаров в корзине *****");
+                        for(let i = 0; i < this.prodsInBasket.length; i++) {
+                            console.log(this.prodsInBasket[i]);
+                        }
+                        return true;
+                    }
+                }, 
+
+                isEmptyBasket: function() {
+                    if(this.prodsInBasket.length === 0) {
+                        return true;
+                    }
+                     return false;
+                } 
+            }
+            
+            
+            
+            // *** Блок инициализации объектов/товаров ***
+            let prod_1 = {
+                // front-end propirties
+                image: "hereIsUrl",
+                name: "prod_1",
+                cost: 1000,
+                descript: {
+                    proc: "intel i5",
+                    ram: 16,
+                    gpu: "geforce 1070"
+                },
+                
+                // back-end propirties
+                id: 123,
+                category: "homePC"
+            }
+
+            let prod_2 = {
+                id: 231,
+                name: "prod_2",
+                category: "homePC",
+                image: "hereIsUrl",
+                cost: 1500,
+                descript: {
+                    proc: "intel i5",
+                    ram: 16,
+                    gpu: "geforce 1080"
+                }
+            }
+
+            let prod_3 = {
+                id: 321,
+                name: "prod_3",
+                category: "homePC",
+                image: "hereIsUrl",
+                cost: 2000,
+                descript: {
+                    proc: "intel i7",
+                    ram: 16,
+                    gpu: "geforce 2080"
+                }
+            }
+
+
+            // *** в этом блоке тестируем нашу корзину ***
+
+            // попытка вывести в консоль пустую корзину
+            basket.printBasket();
+            // попытка вывести в консоль общий прайс пустой корзины
+            console.log("*** Общая стоимость корзины = " + basket.getTotalPrice() + " ***");
+
+            // теперь добавим в нашу корзину 1 товар
+            basket.pushProdToBasket(prod_1);
+            // отображаем товар и выводим total price корзины
+            basket.printBasket();
+            console.log("*** Общая стоимость корзины = " + basket.getTotalPrice() + " ***");
+
+            // добавим оставшиеся товары в корзину
+            basket.pushProdToBasket(prod_2);
+            basket.pushProdToBasket(prod_3);
+            // отображаем товары и выводим total price корзины
+            basket.printBasket();
+            console.log("*** Общая стоимость корзины = " + basket.getTotalPrice() + " ***");
+
+        </script>
+    </body>
+</html>
