@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        .board {
+            background: papayawhip;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        .board_2 {
+            background: yellowgreen;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        .string {
+
+        }
+
+        .cell {
+            border: 1px solid black;
+	        width: 50px;
+	        height: 50px;
+        }
+        .cell_2 {
+            border: 1px solid black;
+	        width: 50px;
+	        height: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        let body = document.querySelector("body");
+
+        let table = document.createElement("table");
+        table.className = "board";
+
+        // Вариант 1
+        // заранее объявляю переменные, в дальнейшем все вновь созданные элементы будут переопределять 
+        // эти переменные, т.е. просто перезаписовать значение в этой переменной, все это для экономии RAM
+        let cell, tr, td;
+
+        for(let i = 0; i < 4; i++) {
+            tr = document.createElement("tr");
+            tr.className = "string"
+
+            for(let j = 0; j < 4; j++) {
+                td = document.createElement("td");
+                td.className = "cell";
+                td.innerHTML = i + " - " + j;
+                tr.appendChild(td);
+            }
+
+            table.appendChild(tr);
+        }
+
+        body.appendChild(table);
+
+        // Вариант 2
+        // Или же правильнее под каждый вновь созданный элемент создавать новую переменную при каждой итерации циклов т.е. 
+        // выделять новое физическое пространство в RAM 
+
+        let table_2 = document.createElement("table");
+        table_2.className = "board_2";
+
+        for(let i = 0; i < 4; i++) {
+            let tr_2 = document.createElement("tr");
+            tr_2.className = "string_2";
+
+            for(let j = 0; j < 4; j++) {
+                let td_2 = document.createElement("td");
+                td_2.className = "cell_2";
+                td_2.innerHTML = i + " - " + j;
+                tr_2.appendChild(td_2);
+            }
+
+            table_2.appendChild(tr_2);
+        }
+
+        body.appendChild(table_2);
+
+
+    </script>
+</body>
+</html>
